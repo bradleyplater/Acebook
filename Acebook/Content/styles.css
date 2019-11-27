@@ -1,0 +1,41 @@
+﻿
+body{
+    font-family: Roboto, sans-serif;
+    background: url(Img/beach.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.main-selector{
+    margin: 0 auto;
+    margin-top: 200px;
+    padding: 0;
+}
+
+.modal-content{
+    background-color: #3b4652;
+    opacity: .95;
+    padding: 0 18px;
+    box-shadow: 0px 0px 3px #848484;
+
+}
+
+.user-img{
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+
+.user-img img {
+    height: 100px;
+    width: 100px;
+}
+
+.form-group{
+    margin-bottom: 25px;
+}
+
+.form-group input {
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+}
