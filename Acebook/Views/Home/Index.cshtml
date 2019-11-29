@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model Acebook.Models.LoginModel;
 
 
     <div>
@@ -19,12 +20,12 @@
                     <img src="../img/avatar.png" />
                 </div>
 
-                <form class="col-12">
+                <form class="col-12" asp-action="Index" asp-controller="Home">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Username" name="username" id="username"/>
+                        <input asp-for="Username" type="text" class="form-control" placeholder="Username"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" name="password" id="password"/>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password"/>
                     </div>
 
                     <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>Login</button>

@@ -23,6 +23,12 @@ namespace Acebook.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Index(LoginModel model)
+        {
+            return Content($"Hello {model.Username} {model.Password}");
+        }
+
         public IActionResult Privacy()
         {
             return View();
