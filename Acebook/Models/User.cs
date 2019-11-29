@@ -14,12 +14,8 @@ namespace Acebook.Models
             Email = email;
             Password = password;
             Posts = posts;
-
-
         }
         public int Id { get; }
-
-
         public string Name { get; }
         public string Email { get; }
         public string Password { get; }
