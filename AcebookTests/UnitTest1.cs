@@ -37,7 +37,6 @@ namespace AcebookTests
             Assert.AreEqual(user.Email, email);
             Assert.AreEqual(user.Password, password);
             Assert.AreEqual(user.Posts, posts);
-
         }
     }
 }
