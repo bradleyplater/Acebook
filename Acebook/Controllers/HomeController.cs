@@ -26,7 +26,16 @@ namespace Acebook.Controllers
         [HttpPost]
         public IActionResult Index(LoginModel model)
         {
-            return Content($"Hello {model.Username} {model.Password}");
+            
+            User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
+
+            if (user.Id != "")
+            {
+                return RedirectToAction("Index", "Feed");
+            } else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public IActionResult Privacy()
