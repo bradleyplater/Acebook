@@ -21,11 +21,8 @@ namespace Acebook.Models
 
 		public static User CheckIfUserExists(string email, string password)
 		{
-		
-			Console.WriteLine("I havent connected to db yet");
 
 			var collection = ConnectToDB("Acebook", "User");
-			Console.WriteLine(collection);
 
 			var document = collection.Find(new BsonDocument("Email", email)).FirstOrDefault();
 
@@ -70,6 +67,55 @@ namespace Acebook.Models
 			}
 		}
 
-    }
+		public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = new BsonDocument
+			{
+				{ "_id", new BsonObjectId(new ObjectId()) },
+				{ "Firstname", Firstname },
+				{ "Surname", Surname },
+				{ "Email", Email },
+				{ "Username", Username },
+				{ "Password", Password },
+				{ "Posts", new BsonArray()}
+			};
+
+			collection.InsertOne(document);
+		}
+
+		public static bool CheckUsernameExists(string Username)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = collection.Find(new BsonDocument("Username", Username)).FirstOrDefault();
+
+			if(document != null)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public static bool CheckEmailExists(string Email)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = collection.Find(new BsonDocument("Email", Email)).FirstOrDefault();
+
+			if (document != null)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+	}
 
 }

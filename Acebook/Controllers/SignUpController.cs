@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acebook.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,33 @@ namespace Acebook.Controllers
         {
             return View();
         }
+
+		[HttpPost]
+		public IActionResult Index(SignUpModel Model)
+		{
+			DBhelper.CreateNewUser(Model.Firstname, Model.Surname, Model.Email, Model.Username, Model.Password);
+			User user = DBhelper.CheckIfUserExists(Model.Email, Model.Password);
+
+			if (user.Email != "")
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				return RedirectToAction("CouldNotSignUp", "SignUp");
+			}
+		}
+
+		public bool formValidation(SignUpModel Model)
+		{
+			return true;
+		}
+
+		public string CouldNotSignUp()
+		{
+			return "Could Not Sign Up";
+		}
+
 
         // GET: SignUp/Details/5
         public ActionResult Details(int id)
