@@ -18,18 +18,12 @@ namespace Acebook.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-			Console.WriteLine("Loading View");
-            return View();
-        }
+		public IActionResult Index()
+		{
+			return View();
+		}
 
-        [HttpPost]
-        public IActionResult SignUp()
-        {
-            return RedirectToAction("/SignUp");
-        }
-
+		[HttpPost]
         public IActionResult Index(LoginModel model)
         {
             User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
@@ -48,11 +42,12 @@ namespace Acebook.Controllers
             return "Could not log you in";
         }
 
-      
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+		
     }
 }
