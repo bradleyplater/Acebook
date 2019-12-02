@@ -20,27 +20,30 @@ namespace Acebook.Controllers
 
         public IActionResult Index()
         {
+			Console.WriteLine("Loading View");
             return View();
         }
 
         [HttpPost]
         public IActionResult Index(LoginModel model)
         {
-            
+
+			Console.WriteLine("I got to the post request");
+
             User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
 
-            if (user.Id != "")
+            if (user.Email != "")
             {
                 return RedirectToAction("Index", "Feed");
             } else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LoginFail", "Home");
             }
         }
 
-        public IActionResult Privacy()
+        public string LoginFail()
         {
-            return View();
+            return "Could not log you in";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
