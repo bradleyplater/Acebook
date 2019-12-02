@@ -19,32 +19,50 @@ namespace Acebook.Controllers
 		[HttpPost]
 		public IActionResult Index(SignUpModel Model)
 		{
-			DBhelper.CreateNewUser(Model.Firstname, Model.Surname, Model.Email, Model.Username, Model.Password);
-			User user = DBhelper.CheckIfUserExists(Model.Email, Model.Password);
 
-			if (user.Email != "")
+			if (formValidation(Model))
 			{
-				return RedirectToAction("Index", "Home");
-			}
-			else
+				DBhelper.CreateNewUser(Model.Firstname, Model.Surname, Model.Email, Model.Username, Model.Password);
+				User user = DBhelper.CheckIfUserExists(Model.Email, Model.Password);
+
+				if (user.Email != "")
+				{
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					return RedirectToAction("CouldNotSignUp", "SignUp");
+				}
+			} else
 			{
 				return RedirectToAction("CouldNotSignUp", "SignUp");
 			}
+
+			
 		}
 
 		public bool formValidation(SignUpModel Model)
 		{
-			return true;
+			if (DBhelper.CheckEmailExists(Model.Email))
+			{
+				return false; 
+			} else if (DBhelper.CheckUsernameExists(Model.Username))
+			{
+				return false;
+			} else
+			{
+				return true;
+			}
 		}
 
-		public string CouldNotSignUp()
+		public IActionResult CouldNotSignUp()
 		{
-			return "Could Not Sign Up";
+			return View();
 		}
 
 
-        // GET: SignUp/Details/5
-        public ActionResult Details(int id)
+		// GET: SignUp/Details/5
+		public ActionResult Details(int id)
         {
             return View();
         }

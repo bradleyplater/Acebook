@@ -33,13 +33,13 @@ namespace Acebook.Controllers
                 return RedirectToAction("Index", "Feed");
             } else
             {
-                return RedirectToAction("LoginFail", "Home");
+                return RedirectToAction("CouldNotLogIn", "Home");
             }
         }
 
-        public string LoginFail()
+        public IActionResult CouldNotLogIn()
         {
-            return "Could not log you in";
+            return View();
         }
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
