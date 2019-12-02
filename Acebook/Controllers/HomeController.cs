@@ -23,9 +23,10 @@ namespace Acebook.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult SignUp()
         {
-            return View();
+            return RedirectToAction("/SignUp");
         }
 
       
