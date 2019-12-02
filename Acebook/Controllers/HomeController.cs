@@ -18,20 +18,36 @@ namespace Acebook.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		[HttpPost]
+        public IActionResult Index(LoginModel model)
         {
-            return View();
+            User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
+
+            if (user.Email != "")
+            {
+                return RedirectToAction("Index", "Feed");
+            } else
+            {
+                return RedirectToAction("LoginFail", "Home");
+            }
         }
 
-        public IActionResult Privacy()
+        public string LoginFail()
         {
-            return View();
+            return "Could not log you in";
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+		
     }
 }
