@@ -20,6 +20,7 @@ namespace Acebook.Controllers
 
         public IActionResult Index()
         {
+			Console.WriteLine("Loading View");
             return View();
         }
 
@@ -27,6 +28,24 @@ namespace Acebook.Controllers
         public IActionResult SignUp()
         {
             return RedirectToAction("/SignUp");
+        }
+
+        public IActionResult Index(LoginModel model)
+        {
+            User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
+
+            if (user.Email != "")
+            {
+                return RedirectToAction("Index", "Feed");
+            } else
+            {
+                return RedirectToAction("LoginFail", "Home");
+            }
+        }
+
+        public string LoginFail()
+        {
+            return "Could not log you in";
         }
 
       
