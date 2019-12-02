@@ -5,10 +5,7 @@ using System.Threading.Tasks;
 
 namespace Acebook.Models
 {
-    public class LoginModel
+    public class Post
     {
-        public string username { get; set; }
-        public string password { get; set; }
     }
 }
-
