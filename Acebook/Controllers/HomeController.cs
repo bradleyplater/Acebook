@@ -25,11 +25,13 @@ namespace Acebook.Controllers
         }
 
         [HttpPost]
+        public IActionResult SignUp()
+        {
+            return RedirectToAction("/SignUp");
+        }
+
         public IActionResult Index(LoginModel model)
         {
-
-			Console.WriteLine("I got to the post request");
-
             User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
 
             if (user.Email != "")
@@ -46,6 +48,7 @@ namespace Acebook.Controllers
             return "Could not log you in";
         }
 
+      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
