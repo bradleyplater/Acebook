@@ -1,4 +1,5 @@
 ﻿using System;
+using MongoDB.Bson;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace Acebook.Models
 {
     public class User
     {
-        public User(int id, string name, string email, string password, Array posts)
+        public User(BsonObjectId id, string name, string email, string password, BsonArray posts)
         {
             Id = id;
             Name = name;
@@ -15,13 +16,11 @@ namespace Acebook.Models
             Password = password;
             Posts = posts;
         }
-        public int Id { get; }
-
-
+        public BsonObjectId Id { get; }
         public string Name { get; }
         public string Email { get; }
         public string Password { get; }
-        public Array Posts { get; }
+        public BsonArray Posts { get; }
 
     }
 }
