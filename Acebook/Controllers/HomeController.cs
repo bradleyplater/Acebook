@@ -26,7 +26,7 @@ namespace Acebook.Controllers
 		[HttpPost]
         public IActionResult Index(LoginModel model)
         {
-            User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
+            User user = DBhelper.CheckIfUserExists(model.Email, model.Password);
 
             if (user.Email != "")
             {

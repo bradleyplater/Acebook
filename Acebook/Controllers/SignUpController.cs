@@ -43,13 +43,22 @@ namespace Acebook.Controllers
 
 		public bool formValidation(SignUpModel Model)
 		{
-			if (DBhelper.CheckEmailExists(Model.Email))
+			if (Model.Firstname == "" && Model.Email == "" && Model.Surname == "" && Model.Password == "" && Model.ConfirmPassword == "")
+			{
+				return false;
+			}else if (DBhelper.CheckEmailExists(Model.Email))
 			{
 				return false; 
 			} else if (DBhelper.CheckUsernameExists(Model.Username))
 			{
 				return false;
-			} else
+			} else if (Model.Password != Model.ConfirmPassword)
+			{
+				return false;
+			} else if (Model.Password.Length < 8)
+			{
+				return false;
+			}
 			{
 				return true;
 			}

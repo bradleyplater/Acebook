@@ -33,21 +33,27 @@ namespace Acebook.Models
 				{
 
 					BsonObjectId id = (BsonObjectId)document.GetValue("_id");
-					string name = (string)document.GetValue("Username");
+					string firstname = (string)document.GetValue("Firstname");
+					string surname = (string)document.GetValue("Surname");
+					string username = (string)document.GetValue("Username");
 					BsonArray posts = (BsonArray)document.GetValue("Posts");
 
 					return new User(
 						id,
-						name,
+						firstname,
+						surname,
+						username,
 						email,
 						password,
 						posts
-						);
+						); 
 				}
 				else
 				{
 					return new User(
 						new BsonObjectId(new ObjectId()),
+						"",
+						"",
 						"",
 						"",
 						"",
@@ -59,6 +65,8 @@ namespace Acebook.Models
 			{
 				return new User(
 						new BsonObjectId(new ObjectId()),
+						"",
+						"",
 						"",
 						"",
 						"",
