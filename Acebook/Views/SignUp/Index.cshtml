@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "SignUp";
 }
-
+@model Acebook.Models.SignUpModel;
 
 
 <div>
@@ -21,29 +21,33 @@
                     <img src="../img/avatar.png" />
                 </div>
         
-                <form action ="/" method = "post" class="col-12">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="First Name" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Last Name" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email" />
-                    </div>
+				<form class="col-12" asp-action="Index" asp-controller="SignUp">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="First Name" asp-for="Firstname" />
+					</div>
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Username" />
-                    </div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Last Name" asp-for="Surname" />
+					</div>
 
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" />
-                    </div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Email" asp-for="Email" />
+					</div>
 
-                    <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>Sign Up!</button>
-                </form>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Username" asp-for="Username" />
+					</div>
+
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Password" asp-for="Password" />
+					</div>
+
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword" />
+					</div>
+
+					<button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i>Sign Up!</button>
+				</form>
 
                 <div class="col-12 forgot">
                     <a href="/Home/Index">Already have an account? Login!</a> 

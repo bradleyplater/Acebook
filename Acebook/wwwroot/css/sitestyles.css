@@ -77,6 +77,7 @@ post-container {
     width: 600px !important;
     background-color: aliceblue !important;
 }
+
 .feed-container { 
     position: relative; 
     padding-top: 100px; 
@@ -86,4 +87,17 @@ post-container {
     margin-bottom: 25px;
     background-color: white;
     border-radius: 10px;
+}
+
+.profile-text{
+	font-size: 18px;
+}
+.profile-container{
+	width: 300px;
+	text-align: left;
+	margin: auto;
+}
+
+table{
+	border-spacing: 10px;
 }

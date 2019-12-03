@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Acebook.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Acebook.Controllers
 {
@@ -26,20 +28,21 @@ namespace Acebook.Controllers
 		[HttpPost]
         public IActionResult Index(LoginModel model)
         {
-            User user = DBhelper.CheckIfUserExists(model.Username, model.Password);
+            User user = DBhelper.CheckIfUserExists(model.Email, model.Password);
 
             if (user.Email != "")
             {
+				HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
                 return RedirectToAction("Index", "Feed");
             } else
             {
-                return RedirectToAction("LoginFail", "Home");
+                return RedirectToAction("CouldNotLogIn", "Home");
             }
         }
 
-        public string LoginFail()
+        public IActionResult CouldNotLogIn()
         {
-            return "Could not log you in";
+            return View();
         }
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

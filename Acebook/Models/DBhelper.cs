@@ -21,11 +21,8 @@ namespace Acebook.Models
 
 		public static User CheckIfUserExists(string email, string password)
 		{
-		
-			Console.WriteLine("I havent connected to db yet");
 
 			var collection = ConnectToDB("Acebook", "User");
-			Console.WriteLine(collection);
 
 			var document = collection.Find(new BsonDocument("Email", email)).FirstOrDefault();
 
@@ -36,21 +33,27 @@ namespace Acebook.Models
 				{
 
 					BsonObjectId id = (BsonObjectId)document.GetValue("_id");
-					string name = (string)document.GetValue("Username");
+					string firstname = (string)document.GetValue("Firstname");
+					string surname = (string)document.GetValue("Surname");
+					string username = (string)document.GetValue("Username");
 					BsonArray posts = (BsonArray)document.GetValue("Posts");
 
 					return new User(
 						id,
-						name,
+						firstname,
+						surname,
+						username,
 						email,
 						password,
 						posts
-						);
+						); 
 				}
 				else
 				{
 					return new User(
 						new BsonObjectId(new ObjectId()),
+						"",
+						"",
 						"",
 						"",
 						"",
@@ -65,11 +68,62 @@ namespace Acebook.Models
 						"",
 						"",
 						"",
+						"",
+						"",
 						new BsonArray()
 						);
 			}
 		}
 
-    }
+		public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = new BsonDocument
+			{
+				{ "_id", new BsonObjectId(new ObjectId()) },
+				{ "Firstname", Firstname },
+				{ "Surname", Surname },
+				{ "Email", Email },
+				{ "Username", Username },
+				{ "Password", Password },
+				{ "Posts", new BsonArray()}
+			};
+
+			collection.InsertOne(document);
+		}
+
+		public static bool CheckUsernameExists(string Username)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = collection.Find(new BsonDocument("Username", Username)).FirstOrDefault();
+
+			if(document != null)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public static bool CheckEmailExists(string Email)
+		{
+			var collection = ConnectToDB("Acebook", "User");
+
+			var document = collection.Find(new BsonDocument("Email", Email)).FirstOrDefault();
+
+			if (document != null)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+	}
 
 }
