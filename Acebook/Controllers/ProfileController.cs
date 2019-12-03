@@ -12,14 +12,18 @@ namespace Acebook.Controllers
 {
     public class ProfileController : Controller
     {
+
         public IActionResult Index()
         {
 			string json = HttpContext.Session.GetString("User");
 
 			Object user = JsonConvert.DeserializeObject(json);
 
+
 			ViewBag.user = user;
             return View();
         }
+
+		
     }
 }

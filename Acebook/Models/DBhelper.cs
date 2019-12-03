@@ -124,6 +124,23 @@ namespace Acebook.Models
 			}
 		}
 
+		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
+		{
+			var collection = ConnectToDB("Acebook", "Posts");
+
+			var document = new BsonDocument
+			{
+				{ "_id", new BsonObjectId(new ObjectId()) },
+				{ "Firstname", Firstname },
+				{ "Surname", Surname },
+				{ "Username", Username },
+				{ "Body", Body },
+				{ "Date", Date }
+			};
+
+			collection.InsertOne(document);
+		}
+
 	}
 
 }
