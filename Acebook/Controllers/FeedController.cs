@@ -10,7 +10,7 @@ namespace Acebook.Controllers
     {
         public IActionResult Index()
         {
-            return Content("You Logged In!");
+            return View();
         }
     }
 }

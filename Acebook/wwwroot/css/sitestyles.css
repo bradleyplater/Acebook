@@ -1,10 +1,10 @@
 ﻿
 body {
-    font-family: Roboto, sans-serif;
     background: url(../img/people.jpg) no-repeat center center fixed;
     background-size: cover;
-    margin: 0;
+    margin:
 }
+   
 
 .main-selector {
     margin: 0 auto;
@@ -47,5 +47,43 @@ body {
     border: 1px solid transparent;
     width: 100%;
     top: 0 !important;
+    padding-left: 0px;
+    padding-right: 0px;
+    left: 0;
 }
 
+.nav-buttons {
+    position: relative;
+    padding-left: 10px;
+    color:black;
+}
+
+.navbar-brand {
+    position: relative;
+    padding-left: 25px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, !important;
+    color: black;
+    font-size: large !important;
+}
+
+
+.create-container  {
+    position: relative;
+    width: 600px;
+    height: 100px
+}
+post-container {
+    position: relative;
+    width: 600px !important;
+    background-color: aliceblue !important;
+}
+.feed-container { 
+    position: relative; 
+    padding-top: 100px; 
+}
+
+.post-box {
+    margin-bottom: 25px;
+    background-color: white;
+    border-radius: 10px;
+}
