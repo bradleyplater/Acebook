@@ -2,7 +2,7 @@
 body {
     background: url(../img/people.jpg) no-repeat center center fixed;
     background-size: cover;
-    margin: 0;
+    margin:
 }
    
 
@@ -55,6 +55,7 @@ body {
 .nav-buttons {
     position: relative;
     padding-left: 10px;
+    color:black;
 }
 
 .navbar-brand {
@@ -71,10 +72,21 @@ body {
     width: 600px;
     height: 100px
 }
-post-container { 
+post-container {
     position: relative;
-    width: 600px !important; 
+    width: 600px !important;
     background-color: aliceblue !important;
+}
+
+.feed-container { 
+    position: relative; 
+    padding-top: 100px; 
+}
+
+.post-box {
+    margin-bottom: 25px;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .profile-text{
