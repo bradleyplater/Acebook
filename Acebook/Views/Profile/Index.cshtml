@@ -3,6 +3,9 @@
 	ViewData["Title"] = "Index";
 }
 
+@{ 
+	var user = ViewBag.user;
+}
 
 <div>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
@@ -32,10 +35,13 @@
 				<div class="col-12 user-img">
 					<img src="../img/avatar.png" />
 				</div>
-				<h2>FirstName -</h2>
-				<h2>Surname -</h2>
-				<h2>Email -</h2>
-				<h2>Username - </h2>
+				<div class="profile-container">
+
+					<h2 class="profile-text">Name     -		@user.Firstname @user.Surname</h2>
+					<h2 class="profile-text">Email    -		@user.Email</h2>
+					<h2 class="profile-text">Username -		@user.Username</h2>
+				</div>
+				
 
 			</div> <!-- End Of Modal Content-->
 		</div>

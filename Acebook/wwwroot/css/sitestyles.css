@@ -76,3 +76,16 @@ post-container {
     width: 600px !important; 
     background-color: aliceblue !important;
 }
+
+.profile-text{
+	font-size: 18px;
+}
+.profile-container{
+	width: 300px;
+	text-align: left;
+	margin: auto;
+}
+
+table{
+	border-spacing: 10px;
+}

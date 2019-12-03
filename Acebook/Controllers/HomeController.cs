@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Acebook.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Acebook.Controllers
 {
@@ -30,6 +32,7 @@ namespace Acebook.Controllers
 
             if (user.Email != "")
             {
+				HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
                 return RedirectToAction("Index", "Feed");
             } else
             {
