@@ -12,10 +12,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
 </div>
 
-<div>
-    <div class="modal-dialog text-center">
-        <div class="col-sm-8 main-selector">
-            <div class="modal-content div-center">
+
+
 
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,34 +26,26 @@
                         <ul class="navbar-nav mr-auto">
                             <div class="nav-buttons">
                                 <li class="nav-item active">
-                                    <a class="feed-link" href="#">Feed <span class="sr-only">(current)</span></a>
+                                    <a class="feed-link">Feed <span class="sr-only">(current)</span></a>
                                 </li>
                             </div>
                             <div class="nav-buttons">
                                 <li class="nav-item active">
-                                    <a class="profile-link" href="#">Profile <span class="sr-only">(current)</span></a>
+                                    <a class="profile-link">Profile <span class="sr-only">(current)</span></a>
                                 </li>
                             </div>
                             <div class="nav-buttons">
                                 <li class="nav-item active">
-                                    <a class="logout-link" href="#">Logout <span class="sr-only">(current)</span></a>
+                                    <a class="logout-link">Logout <span class="sr-only">(current)</span></a>
                                 </li>
                             </div>
                         </ul>
 
                     </div>
                 </nav>
-
-                <div class="card-container">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">
-                                    Make
-                                    a publication
-                                </a>
-                            </li>
-                        </ul>
+<div class="feed-container">
+                <div class="post-box">
+                    <div class="card-header">Make a Post
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
@@ -68,13 +58,13 @@
                         </div>
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
-                                <button type="submit" class="btn btn-primary">Share</button>
+                                <button type="submit" class="btn btn-primary">Post</button>
                             </div>
 
                         </div>
                     </div>
                 </div>
-            </div>
+            
 
             <div class="card gedf-card">
                 <div class="card-header">
@@ -88,26 +78,10 @@
                                 <div class="h7 text-muted">Sarah Wade</div>
                             </div>
                         </div>
-                        <div>
-                            <div class="dropdown">
-                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                    <div class="h6 dropdown-header">Configuration</div>
-                                    <a class="dropdown-item" href="#">Save</a>
-                                    <a class="dropdown-item" href="#">Hide</a>
-                                    <a class="dropdown-item" href="#">Report</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
-                    <a class="card-link" href="#">
-                        <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
-                    </a>
                     <p class="card-text">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium esse magnam nemo dolor
                         sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
@@ -115,12 +89,10 @@
                 </div>
                 <div class="card-footer">
                     <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Dislike</a>
                     <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                     <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 </div>
             </div>
-
-        </div>
-        </div> <!-- End Of Modal Content-->
-</div>
+    </div>
 
