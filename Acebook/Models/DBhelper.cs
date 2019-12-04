@@ -18,6 +18,13 @@ namespace Acebook.Models
 			Console.WriteLine("I got here 1");
 			return database.GetCollection<BsonDocument>(collectionName);
         }
+		public static IMongoCollection<Post> ConnectToDBForPost(string dbName, string collectionName)
+		{
+			var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
+			var client = new MongoClient(connectionString);
+			var database = client.GetDatabase(dbName);
+			return database.GetCollection<Post>(collectionName);
+		}
 
 		public static User CheckIfUserExists(string email, string password)
 		{
@@ -36,7 +43,6 @@ namespace Acebook.Models
 					string firstname = (string)document.GetValue("Firstname");
 					string surname = (string)document.GetValue("Surname");
 					string username = (string)document.GetValue("Username");
-					BsonArray posts = (BsonArray)document.GetValue("Posts");
 
 					return new User(
 						id,
@@ -44,8 +50,7 @@ namespace Acebook.Models
 						surname,
 						username,
 						email,
-						password,
-						posts
+						password
 						); 
 				}
 				else
@@ -56,8 +61,7 @@ namespace Acebook.Models
 						"",
 						"",
 						"",
-						"",
-						new BsonArray()
+						""
 						);
 				}
 			}
@@ -69,8 +73,7 @@ namespace Acebook.Models
 						"",
 						"",
 						"",
-						"",
-						new BsonArray()
+						""
 						);
 			}
 		}
@@ -87,7 +90,6 @@ namespace Acebook.Models
 				{ "Email", Email },
 				{ "Username", Username },
 				{ "Password", Password },
-				{ "Posts", new BsonArray()}
 			};
 
 			collection.InsertOne(document);
@@ -122,6 +124,34 @@ namespace Acebook.Models
 			{
 				return false;
 			}
+		}
+
+		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
+		{
+			var collection = ConnectToDB("Acebook", "Posts");
+
+			var document = new BsonDocument
+			{
+				{ "_id", new BsonObjectId(new ObjectId()) },
+				{ "Firstname", Firstname },
+				{ "Surname", Surname },
+				{ "Username", Username },
+				{ "Body", Body },
+				{ "Date", Date }
+			};
+
+			collection.InsertOne(document);
+		}
+
+		public static List<BsonDocument> GetAllPosts()
+		{
+
+			var collection = ConnectToDB("Acebook", "Posts");
+
+			var results = collection.Find(new BsonDocument()).ToList();
+
+			return results;
+	
 		}
 
 	}

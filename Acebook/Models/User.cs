@@ -8,7 +8,7 @@ namespace Acebook.Models
 {
     public class User
     {
-        public User(BsonObjectId id, string firstname, string surname, string username, string email, string password, BsonArray posts)
+        public User(BsonObjectId id, string firstname, string surname, string username, string email, string password)
         {
             Id = id;
 			Firstname = firstname;
@@ -16,7 +16,6 @@ namespace Acebook.Models
             Username = username;
             Email = email;
             Password = password;
-            Posts = posts;
         }
         public BsonObjectId Id { get; }
         public string Firstname { get; }
@@ -24,7 +23,6 @@ namespace Acebook.Models
 		public string Username { get; }
         public string Email { get; }
         public string Password { get; }
-        public BsonArray Posts { get; }
 
     }
 }
