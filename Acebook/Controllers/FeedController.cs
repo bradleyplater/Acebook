@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Acebook.Models;
+﻿using Acebook.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 namespace Acebook.Controllers
 {
-    public class FeedController : Controller
+	public class FeedController : Controller
     {
 		Object user;
         public IActionResult Index()
         {
 			string json = HttpContext.Session.GetString("User");
-
 			user = JsonConvert.DeserializeObject(json);
 
+			var posts = DBhelper.GetAllPosts();
+
+			ViewBag.posts = posts;
 
 			ViewBag.user = user;
 			return View();
         }
 
 		[HttpPost]
-		public string Index(PostModel Model)
+		public IActionResult SubmitPost(string message)
 		{
 			string json = HttpContext.Session.GetString("User");
 
@@ -34,12 +33,12 @@ namespace Acebook.Controllers
 			string Firstname = user.Firstname;
 			string Surname = user.Surname;
 			string Username = user.Username;
-			string Body = Model.Body;
+			string Body = message;
 			DateTime Date = DateTime.Now;
 
 			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date);
 
-			return "String";
+			return RedirectToAction("Index", "Feed");
 		}
 	}
 }
