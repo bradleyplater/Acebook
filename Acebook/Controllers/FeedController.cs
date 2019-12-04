@@ -36,8 +36,10 @@ namespace Acebook.Controllers
 			string Username = user.Username;
 			string Body = message;
 			DateTime Date = DateTime.Now;
+            int Like = 0;
+            int Dislike = 0;
 
-			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date);
+			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date, Like, Dislike);
 
 			return RedirectToAction("Index", "Feed");
 		}
