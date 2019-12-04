@@ -22,6 +22,7 @@ namespace Acebook.Controllers
 
 		public IActionResult Index()
 		{
+            ViewBag.page = "login";
 			return View();
 		}
 
