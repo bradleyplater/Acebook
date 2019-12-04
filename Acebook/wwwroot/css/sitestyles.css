@@ -95,7 +95,7 @@ post-container {
 .profile-container{
 	width: 300px;
 	text-align: left;
-	margin: auto;
+	
 }
 
 .card-bottomMargin { 
@@ -114,4 +114,13 @@ post-container {
 }
 .logo-font-navbar {
     font-family: 'Merienda', cursive;
+}
+
+.profile-information-container { 
+    position: relative; 
+
+}
+.profile-name-box {
+    position: absolute;
+    left: 150px !important;
 }
