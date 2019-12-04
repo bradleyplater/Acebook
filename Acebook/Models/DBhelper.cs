@@ -126,7 +126,7 @@ namespace Acebook.Models
 			}
 		}
 
-		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
+		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date, int Like, int Dislike)
 		{
 			var collection = ConnectToDB("Acebook", "Posts");
 
@@ -137,7 +137,9 @@ namespace Acebook.Models
 				{ "Surname", Surname },
 				{ "Username", Username },
 				{ "Body", Body },
-				{ "Date", Date }
+				{ "Date", Date },
+                { "Like", Like },
+                { "Dislike", Dislike }
 			};
 
 			collection.InsertOne(document);
