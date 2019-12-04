@@ -18,6 +18,7 @@ namespace Acebook.Controllers
 			ViewBag.posts = posts;
 
 			ViewBag.user = user;
+            ViewBag.page = "feed"; 
 			return View();
         }
 

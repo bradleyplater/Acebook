@@ -13,6 +13,7 @@ namespace Acebook.Controllers
         // GET: SignUp
         public ActionResult Index()
         {
+            ViewBag.page = "signup";
             return View();
         }
 

@@ -104,3 +104,14 @@ post-container {
 .navbar-stick { 
     z-index: 99999; 
 }
+
+.title-centre {
+    margin: auto;
+}
+.logo-font {
+    font-family: 'Merienda', cursive;
+    font-size: 45px !important ; 
+}
+.logo-font-navbar {
+    font-family: 'Merienda', cursive;
+}

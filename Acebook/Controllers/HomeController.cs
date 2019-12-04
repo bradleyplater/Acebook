@@ -20,8 +20,15 @@ namespace Acebook.Controllers
             _logger = logger;
         }
 
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "Home");
+        }
+
 		public IActionResult Index()
 		{
+            ViewBag.page = "login";
 			return View();
 		}
 

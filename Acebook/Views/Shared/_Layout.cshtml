@@ -1,7 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var page = ViewBag.page;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Merienda&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Acebook</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -10,6 +14,40 @@
 <body>
     <div class="container">
         <main role="main" class="pb-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-stick">
+                @if (page == "login" || page == "signup")
+                {
+                    <a class="navbar-brand title-centre logo-font" href="#">AceBook</a>
+                }
+                else if (page == "feed")
+                {
+                    <a class="navbar-brand logo-font-navbar" href="#">AceBook</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link active" href="#">Feed <span class="sr-only">(current)</span></a>
+                            <a class="nav-item nav-link" href="/profile">Profile</a>
+                            <a class="nav-item nav-link" href="/home/signOut">Sign Out</a>
+                        </div>
+                    </div>
+                }
+                else if (page == "profile")
+                {
+                    <a class="navbar-brand logo-font-navbar" href="#">AceBook</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link " href="/Feed">Feed </a>
+                            <a class="nav-item nav-link active">Profile<span class="sr-only">(current)</span></a>
+                            <a class="nav-item nav-link" href="/signOut">Sign Out</a>
+                        </div>
+                    </div>
+                }
+            </nav>
             @RenderBody()
         </main>
     </div>
