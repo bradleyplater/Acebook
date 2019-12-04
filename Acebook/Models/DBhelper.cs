@@ -156,6 +156,24 @@ namespace Acebook.Models
 	
 		}
 
+		public static void AddLike(BsonDocument document)
+		{
+			var collection = ConnectToDB("Acebook", "Posts");
+
+			var like = document.GetValue("Like");
+
+			int newLike = (int)like + 1;
+
+			var update = Builders<BsonDocument>.Update.Set("Like", newLike);
+			var result = collection.UpdateOne(document, update);
+		}
+
+		public static BsonDocument SearchForDocument(int count)
+		{
+			var documents = GetAllPosts();
+
+			return documents[count];
+		}
 	}
 
 }

@@ -8,12 +8,13 @@ namespace Acebook.Controllers
 	public class FeedController : Controller
     {
 		Object user;
+		
         public IActionResult Index()
         {
 			string json = HttpContext.Session.GetString("User");
 			user = JsonConvert.DeserializeObject(json);
 
-			var posts = DBhelper.GetAllPosts();
+		    var posts = DBhelper.GetAllPosts();
 
 			ViewBag.posts = posts;
 
@@ -42,6 +43,15 @@ namespace Acebook.Controllers
 			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date, Like, Dislike);
 
 			return RedirectToAction("Index", "Feed");
+		}
+
+		public IActionResult Like(int count)
+		{
+			var document = DBhelper.SearchForDocument(count);
+
+			DBhelper.AddLike(document);
+
+			return RedirectToAction("Feed", "Index");
 		}
 	}
 }
