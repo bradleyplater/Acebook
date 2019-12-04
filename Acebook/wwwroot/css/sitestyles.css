@@ -97,3 +97,10 @@ post-container {
 	text-align: left;
 	margin: auto;
 }
+
+.card-bottomMargin { 
+    margin-bottom: 20px;
+}
+.navbar-stick { 
+    z-index: 99999; 
+}
