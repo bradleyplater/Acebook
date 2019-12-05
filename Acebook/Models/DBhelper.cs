@@ -178,19 +178,12 @@ namespace Acebook.Models
 			{
 				like.Add(newDocument);
 
-				int index = -1;
-				BsonValue x = null;
-				foreach (var i in dislike)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						x = i;
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughDislike(dislike, id);
 
-				if (x != null)
+				BsonValue userId = item.Item1;
+				int index = item.Item2;
+
+				if (userId != null)
 				{
 					RemoveDislike(dislike, collection, index, filter);
 				}
@@ -200,15 +193,8 @@ namespace Acebook.Models
 			}
 			else
 			{
-				int index = -1;
-				foreach (var i in like)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughLike(like, id);
+				int index = item.Item2;
 				RemoveLike(like, collection, index, filter);
 			}
 
@@ -237,20 +223,12 @@ namespace Acebook.Models
 			{
 				dislike.Add(newDocument);
 
-				int index = -1;
-				BsonValue x = null;
-				foreach (var i in like)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						x = i;
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughLike(like, id);
 
+				BsonValue userId = item.Item1;
+				int index = item.Item2;
 
-				if (x != null)
+				if (userId != null)
 				{
 					RemoveLike(like, collection, index, filter);
 				}
@@ -260,15 +238,10 @@ namespace Acebook.Models
 			}
 			else
 			{
-				int index = -1;
-				foreach (var i in dislike)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughDislike(dislike, id);
+
+				int index = item.Item2;
+				
 				RemoveDislike(dislike, collection, index, filter);
 			}
 		}
@@ -285,6 +258,38 @@ namespace Acebook.Models
 			dislike.RemoveAt(index);
 			var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
 			collection.UpdateOne(filter, updateDislike);
+		}
+
+		public static Tuple<BsonValue, int> SearchThroughLike(BsonArray like, string id)
+		{
+			var index = -1;
+			BsonValue x = null;
+			foreach (var i in like)
+			{
+				index++;
+				if (i["user"] == id)
+				{
+					x = i;
+					break;
+				}
+			}
+			return Tuple.Create(x, index);
+		}
+
+		public static Tuple<BsonValue, int> SearchThroughDislike(BsonArray dislike, string id)
+		{
+			var index = -1;
+			BsonValue x = null;
+			foreach (var i in dislike)
+			{
+				index++;
+				if (i["user"] == id)
+				{
+					x = i;
+					break;
+				}
+			}
+			return Tuple.Create(x, index);
 		}
 
 		public static BsonDocument SearchForDocument(int count)
