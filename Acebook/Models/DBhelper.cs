@@ -225,6 +225,21 @@ namespace Acebook.Models
 				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
 				collection.UpdateOne(filter, update);
 			}
+			else
+			{
+				int index = -1;
+				foreach (var i in dislike)
+				{
+					index++;
+					if (i["user"] == id)
+					{
+						break;
+					}
+				}
+				dislike.RemoveAt(index);
+				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+				collection.UpdateOne(filter, update);
+			}
 		}
 
 		public static BsonDocument SearchForDocument(int count)
