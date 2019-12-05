@@ -82,7 +82,16 @@
 						</form>
 						<form asp-action="Dislike" asp-controller="Feed">
 							<input type="hidden" name="count" value=@count />
-							<button type="submit" class="card-link">Dislike @post.GetValue("Dislike")</button>
+							@{
+								var dislike = post.GetValue("Dislike");
+								var y = 0;
+
+								foreach (var i in dislike)
+								{
+									y++;
+								}
+							}
+							<button type="submit" class="card-link">Dislike @y</button>
 						</form>
 						<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
 						<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
