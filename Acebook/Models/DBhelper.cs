@@ -185,16 +185,31 @@ namespace Acebook.Models
 			
 		}
 
-		public static void AddDislike(BsonDocument document)
+		public static void AddDislike(BsonDocument document, string id)
 		{
+			bool userDislike = false;
 			var collection = ConnectToDB("Acebook", "Posts");
 
-			var dislike = document.GetValue("Dislike");
+			BsonArray dislike = (BsonArray)document.GetValue("Dislike");
+			var filter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id"));
+			var newDocument = new BsonDocument { { "user", id } };
 
-			int newDislike = (int)dislike + 1;
+			foreach (var i in dislike)
+			{
+				if (i == newDocument)
+				{
+					userDislike = true;
+				}
+			}
 
-			var update = Builders<BsonDocument>.Update.Set("Dislike", newDislike);
-			collection.UpdateOne(document, update);
+			if (userDislike != true)
+			{
+				dislike.Add(newDocument);
+
+
+				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+				collection.UpdateOne(filter, update);
+			}
 		}
 
 		public static BsonDocument SearchForDocument(int count)

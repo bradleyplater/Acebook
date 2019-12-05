@@ -72,7 +72,7 @@ namespace Acebook.Controllers
 
 			var document = DBhelper.SearchForDocument(count);
 
-			DBhelper.AddDislike(document);
+			DBhelper.AddDislike(document, id);
 
 			return RedirectToAction("Index", "Feed");
 		}
