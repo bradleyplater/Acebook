@@ -9,132 +9,142 @@ namespace Acebook.Models
 {
     public class DBhelper
     {
-		//Connects to the mongo database and retrieves the collection which is specified by the function calling the code
+        //Connects to the mongo database and retrieves the collection which is specified by the function calling the code
         public static IMongoCollection<BsonDocument> ConnectToDB(string dbName, string collectionName)
         {
-			var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
+            var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(dbName);
-			Console.WriteLine("I got here 1");
-			return database.GetCollection<BsonDocument>(collectionName);
+            Console.WriteLine("I got here 1");
+            return database.GetCollection<BsonDocument>(collectionName);
         }
 
-		/* Takes parameters and checks if a user exists from checking the database against those parameters
+        /* Takes parameters and checks if a user exists from checking the database against those parameters
 		 * returns a filled user object if a user exists and returns an empty one if not */
-		public static User CheckIfUserExists(string email, string password)
-		{
+        public static User CheckIfUserExists(string email, string password)
+        {
 
-			var collection = ConnectToDB("Acebook", "User");
+            var collection = ConnectToDB("Acebook", "User");
 
-			var document = collection.Find(new BsonDocument("Email", email)).FirstOrDefault();
+            var document = collection.Find(new BsonDocument("Email", email)).FirstOrDefault();
 
 
-			if(document != null)
-			{
-				if ((string)document.GetValue("Password") == password)
-				{
+            if (document != null)
+            {
+                if ((string)document.GetValue("Password") == password)
+                {
 
-					BsonObjectId id = (BsonObjectId)document.GetValue("_id");
-					string firstname = (string)document.GetValue("Firstname");
-					string surname = (string)document.GetValue("Surname");
-					string username = (string)document.GetValue("Username");
+                    BsonObjectId id = (BsonObjectId)document.GetValue("_id");
+                    string firstname = (string)document.GetValue("Firstname");
+                    string surname = (string)document.GetValue("Surname");
+                    string username = (string)document.GetValue("Username");
 
-					return new User(id,firstname,surname,username,email,password); 
-				}
-				else
-				{
-					return new User(new BsonObjectId(new ObjectId()),"","","","","");
-				}
-			}
-			else
-			{
-				return new User(new BsonObjectId(new ObjectId()),"","","","","");
-			}
-		}
+                    return new User(id, firstname, surname, username, email, password);
+                }
+                else
+                {
+                    return new User(new BsonObjectId(new ObjectId()), "", "", "", "", "");
+                }
+            }
+            else
+            {
+                return new User(new BsonObjectId(new ObjectId()), "", "", "", "", "");
+            }
+        }
 
-		//Creates a new user document within the mongo database
-		public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
-		{
-			var collection = ConnectToDB("Acebook", "User");
+        //Creates a new user document within the mongo database
+        public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
+        {
+            var collection = ConnectToDB("Acebook", "User");
 
-			var document = new BsonDocument
-			{
-				{ "_id", new BsonObjectId(new ObjectId()) },
-				{ "Firstname", Firstname },
-				{ "Surname", Surname },
-				{ "Email", Email },
-				{ "Username", Username },
-				{ "Password", Password },
-			};
+            var document = new BsonDocument
+            {
+                { "_id", new BsonObjectId(new ObjectId()) },
+                { "Firstname", Firstname },
+                { "Surname", Surname },
+                { "Email", Email },
+                { "Username", Username },
+                { "Password", Password },
+            };
 
-			collection.InsertOne(document);
-		}
+            collection.InsertOne(document);
+        }
 
-		//Checks if the username provided exists in the database
-		public static bool CheckUsernameExists(string Username)
-		{
-			var collection = ConnectToDB("Acebook", "User");
+        //Checks if the username provided exists in the database
+        public static bool CheckUsernameExists(string Username)
+        {
+            var collection = ConnectToDB("Acebook", "User");
 
-			var document = collection.Find(new BsonDocument("Username", Username)).FirstOrDefault();
+            var document = collection.Find(new BsonDocument("Username", Username)).FirstOrDefault();
 
-			if(document != null)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            if (document != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		//Checks if the email provided exists in the database
-		public static bool CheckEmailExists(string Email)
-		{
-			var collection = ConnectToDB("Acebook", "User");
+        //Checks if the email provided exists in the database
+        public static bool CheckEmailExists(string Email)
+        {
+            var collection = ConnectToDB("Acebook", "User");
 
-			var document = collection.Find(new BsonDocument("Email", Email)).FirstOrDefault();
+            var document = collection.Find(new BsonDocument("Email", Email)).FirstOrDefault();
 
-			if (document != null)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            if (document != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		//Creates a post document within the mongo database
-		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
-		{
-			var collection = ConnectToDB("Acebook", "Posts");
+        //Creates a post document within the mongo database
+        public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
+        {
+            var collection = ConnectToDB("Acebook", "Posts");
 
-			var document = new BsonDocument
-			{
-				{ "_id", new BsonObjectId(new ObjectId()) },
-				{ "Firstname", Firstname },
-				{ "Surname", Surname },
-				{ "Username", Username },
-				{ "Body", Body },
-				{ "Date", Date },
+            var document = new BsonDocument
+            {
+                { "_id", new BsonObjectId(new ObjectId()) },
+                { "Firstname", Firstname },
+                { "Surname", Surname },
+                { "Username", Username },
+                { "Body", Body },
+                { "Date", Date },
                 { "Like", new BsonArray() },
                 { "Dislike", new BsonArray() }
-			};
+            };
 
-			collection.InsertOne(document);
-		}
+            collection.InsertOne(document);
+        }
 
-		//Returns a list of all posts that are stored within the mongo database
-		public static List<BsonDocument> GetAllPosts()
-		{
+        //Returns a list of all posts that are stored within the mongo database
+        public static List<BsonDocument> GetAllPosts()
+        {
 
-			var collection = ConnectToDB("Acebook", "Posts");
+            var collection = ConnectToDB("Acebook", "Posts");
 
-			var results = collection.Find(new BsonDocument()).ToList();
+            var results = collection.Find(new BsonDocument()).ToList();
 
-			return results;
-	
-		}
+            return results;
+
+        }
+
+        public static List<BsonDocument> GetPostById(string id)
+        {
+            var collection = ConnectToDB("Acebook", "Posts");
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var results = collection.Find(filter).ToList();
+            return results; 
+        }
+            
+
 
 		//Adds a like to an existing post document
 		public static void AddLike(BsonDocument document, string id)

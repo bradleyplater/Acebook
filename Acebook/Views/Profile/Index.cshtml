@@ -64,37 +64,42 @@
 
 
 <div>
-    <div class="profile-feed-container">
-        <div class="post-box">
-            <div class="card-header">Your Posts</div>
-            <div class="card-body">
-                <div class="card gedf-card card-bottomMargin">
 
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
+    @foreach (var i in posts)
+    {
+        <div class="profile-feed-container">
+            <div class="post-box">
+                <div class="card-header">Your Posts</div>
+                <div class="card-body">
+                    <div class="card gedf-card card-bottomMargin">
+
+                        <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class=" rounded-circle" width="45" src="https://picsum.photos/50/50">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0"> @posts.GetValue("Firstname")  Wade</div>
-                                    <div class="h7 text-muted">click to go to post.. </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="mr-2">
+                                        <img class=" rounded-circle" width="45" src="https://picsum.photos/50/50">
+                                    </div>
+                                    <div class="ml-2">
+                                        <div class="h5 m-0"> Wade</div>
+                                        <div class="h7 text-muted">click to go to post.. </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10am</div>
-                        <p class="card-text">
-                            Today i did this thing ...
-                        </p>
+                        <div class="card-body">
+                            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10am</div>
+                            <p class="card-text">
+                                Today i did this thing ...
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
         </div>
-    </div>
+    }
+
 
 </div>
 
