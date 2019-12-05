@@ -8,18 +8,26 @@ namespace Acebook.Controllers
 	public class FeedController : Controller
     {
 		Object user;
+		
         public IActionResult Index()
         {
 			string json = HttpContext.Session.GetString("User");
-			user = JsonConvert.DeserializeObject(json);
+			
+			if (json != "No User")
+			{
+				user = JsonConvert.DeserializeObject(json);
 
-			var posts = DBhelper.GetAllPosts();
+				var posts = DBhelper.GetAllPosts();
 
-			ViewBag.posts = posts;
+				ViewBag.posts = posts;
 
-			ViewBag.user = user;
-            ViewBag.page = "feed"; 
-			return View();
+				ViewBag.user = user;
+				ViewBag.page = "feed";
+				return View();
+			} else
+			{
+				return RedirectToAction("Index", "Home");
+			}
         }
 
 		[HttpPost]
@@ -36,10 +44,42 @@ namespace Acebook.Controllers
 			string Username = user.Username;
 			string Body = message;
 			DateTime Date = DateTime.Now;
-            int Like = 0;
-            int Dislike = 0;
 
-			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date, Like, Dislike);
+			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date);
+
+			return RedirectToAction("Index", "Feed");
+		}
+
+		public IActionResult Like(int count)
+		{
+			string json = HttpContext.Session.GetString("User");
+
+			Object objectuser = JsonConvert.DeserializeObject(json);
+			ViewBag.user = objectuser;
+			var user = ViewBag.user;
+
+			string id = user.Id;
+
+			var document = DBhelper.SearchForDocument(count);
+
+			DBhelper.AddLike(document, id);
+
+			return RedirectToAction("Index", "Feed");
+		}
+
+		public IActionResult Dislike(int count)
+		{
+			string json = HttpContext.Session.GetString("User");
+
+			Object objectuser = JsonConvert.DeserializeObject(json);
+			ViewBag.user = objectuser;
+			var user = ViewBag.user;
+
+			string id = user.Id;
+
+			var document = DBhelper.SearchForDocument(count);
+
+			DBhelper.AddDislike(document, id);
 
 			return RedirectToAction("Index", "Feed");
 		}

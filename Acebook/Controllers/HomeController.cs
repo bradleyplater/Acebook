@@ -23,11 +23,13 @@ namespace Acebook.Controllers
         public IActionResult SignOut()
         {
             HttpContext.Session.Clear();
+			HttpContext.Session.SetString("User", "No User");
             return RedirectToAction("index", "Home");
         }
 
 		public IActionResult Index()
 		{
+			HttpContext.Session.SetString("User", "No User");
             ViewBag.page = "login";
 			return View();
 		}
@@ -39,6 +41,7 @@ namespace Acebook.Controllers
 
             if (user.Email != "")
             {
+				HttpContext.Session.Clear();
 				HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
                 return RedirectToAction("Index", "Feed");
             } else

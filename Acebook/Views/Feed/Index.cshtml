@@ -37,38 +37,70 @@
 			</div>
 		</div>
 
+		@{
 
-		@foreach (var post in posts)
-		{
-			<div class="card gedf-card card-bottomMargin">
+			int count = -1;
 
-				<div class="card-header">
-					<div class="d-flex justify-content-between align-items-center">
+			foreach (var post in posts)
+			{
+				count++;
+
+				<div class="card gedf-card card-bottomMargin">
+
+					<div class="card-header">
 						<div class="d-flex justify-content-between align-items-center">
-							<div class="mr-2">
-								<img class=" rounded-circle" width="45" src="https://picsum.photos/50/50">
-							</div>
-							<div class="ml-2">
-								<div class="h5 m-0">@post.GetValue("Firstname") @post.GetValue("Surname")</div>
-								<div class="h7 text-muted">@post.GetValue("Username")</div>
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="mr-2">
+									<img class=" rounded-circle" width="45" src="https://picsum.photos/50/50">
+								</div>
+								<div class="ml-2">
+									<div class="h5 m-0">@post.GetValue("Firstname") @post.GetValue("Surname")</div>
+									<div class="h7 text-muted">@post.GetValue("Username")</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="card-body">
+						<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>@post.GetValue("Date")</div>
+						<p class="card-text">
+							@post.GetValue("Body")
+						</p>
+					</div>
+					<div class="card-footer">
+						<form asp-action="Like" asp-controller="Feed">
+							<input type="hidden" name="count" value=@count />
+							@{ 
+								var like = post.GetValue("Like");
+								var likeCounter = 0;
+
+								foreach (var i in like)
+								{
+									likeCounter++;
+								}
+							}
+							<Button class="card-link" type="submit"> Like @likeCounter</Button>
+						</form>
+						<form asp-action="Dislike" asp-controller="Feed">
+							<input type="hidden" name="count" value=@count />
+							@{
+								var dislike = post.GetValue("Dislike");
+								var dislikeCounter = 0;
+
+								foreach (var i in dislike)
+								{
+									dislikeCounter++;
+								}
+							}
+							<button type="submit" class="card-link">Dislike @dislikeCounter</button>
+						</form>
+						<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+						<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+					</div>
 				</div>
-				<div class="card-body">
-					<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>@post.GetValue("Date")</div>
-					<p class="card-text">
-						@post.GetValue("Body")
-					</p>
-				</div>
-				<div class="card-footer">
-					<a href="#" class="card-link"><i class="fa fa-gittip"></i> Like @post.GetValue("Like")</a>
-					<a href="#" class="card-link"><i class="fa fa-gittip"></i> Dislike @post.GetValue("Dislike")</a>
-					<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-					<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-				</div>
-			</div>
+			}
 		}
+
+
 	</div>
 </div>
 
