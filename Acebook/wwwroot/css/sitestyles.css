@@ -148,3 +148,9 @@ post-container {
     border-color: darkgray;
 }
 
+.profile-picture img {
+    border: inset;
+    border-color: darksalmon;
+    border-radius: 50%;
+}
+
