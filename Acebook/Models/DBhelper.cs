@@ -179,18 +179,24 @@ namespace Acebook.Models
 				like.Add(newDocument);
 
 				int index = -1;
+				BsonValue x = null;
 				foreach (var i in dislike)
 				{
 					index++;
 					if (i["user"] == id)
 					{
+						x = i;
 						break;
 					}
 				}
 
-				dislike.RemoveAt(index);
-				var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
-				collection.UpdateOne(filter, updateDislike);
+				if (x != null)
+				{
+					dislike.RemoveAt(index);
+					var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+					collection.UpdateOne(filter, updateDislike);
+				}
+
 				var update = Builders<BsonDocument>.Update.Set("Like", like);
 				collection.UpdateOne(filter, update);
 			}
@@ -218,6 +224,7 @@ namespace Acebook.Models
 			bool userDislike = false;
 			var collection = ConnectToDB("Acebook", "Posts");
 
+			BsonArray like = (BsonArray)document.GetValue("Like");
 			BsonArray dislike = (BsonArray)document.GetValue("Dislike");
 			var filter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id"));
 			var newDocument = new BsonDocument { { "user", id } };
@@ -234,6 +241,25 @@ namespace Acebook.Models
 			{
 				dislike.Add(newDocument);
 
+				int index = -1;
+				BsonValue x = null;
+				foreach (var i in like)
+				{
+					index++;
+					if (i["user"] == id)
+					{
+						x = i;
+						break;
+					}
+				}
+
+
+				if (x != null)
+				{
+					like.RemoveAt(index);
+					var updateLike = Builders<BsonDocument>.Update.Set("Like", like);
+					collection.UpdateOne(filter, updateLike);
+				}
 
 				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
 				collection.UpdateOne(filter, update);
