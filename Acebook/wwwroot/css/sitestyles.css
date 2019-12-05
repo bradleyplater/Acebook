@@ -2,7 +2,7 @@
 body {
     background: url(../img/people.jpg) no-repeat center center fixed;
     background-size: cover;
-    margin:
+    
 }
    
 
@@ -87,15 +87,18 @@ post-container {
     margin-bottom: 25px;
     background-color: white;
     border-radius: 10px;
+   
 }
 
 .profile-text{
+    margin-left: 25px;
+    justify-content: left;
 	font-size: 18px;
 }
 .profile-container{
 	width: 300px;
 	text-align: left;
-	margin: auto;
+	
 }
 
 .card-bottomMargin { 
@@ -115,3 +118,39 @@ post-container {
 .logo-font-navbar {
     font-family: 'Merienda', cursive;
 }
+
+.profile-information-container { 
+    position: relative; 
+
+}
+.profile-name-box {
+    position: absolute;
+    left: 150px !important;
+    padding: 15px; 
+    margin-top: 85px; 
+}
+
+.profile-feed-container {
+    position: relative;
+    padding-top: 100px;
+    padding-left: 50px;
+    margin-left: 300px;
+}
+
+.profile-info-box {
+    margin-top: 0px !important;
+    height: 450px;
+    background-color: white;
+    padding-top: 35px;
+    border-radius: 15px;
+    border:thin;
+    border-width: 1px;
+    border-color: darkgray;
+}
+
+.profile-picture img {
+    border: inset;
+    border-color: darksalmon;
+    border-radius: 50%;
+}
+
