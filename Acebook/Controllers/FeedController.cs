@@ -37,21 +37,36 @@ namespace Acebook.Controllers
 			string Username = user.Username;
 			string Body = message;
 			DateTime Date = DateTime.Now;
-            int Like = 0;
-            int Dislike = 0;
 
-			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date, Like, Dislike);
+			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date);
 
 			return RedirectToAction("Index", "Feed");
 		}
 
 		public IActionResult Like(int count)
 		{
+			string json = HttpContext.Session.GetString("User");
+
+			Object objectuser = JsonConvert.DeserializeObject(json);
+			ViewBag.user = objectuser;
+			var user = ViewBag.user;
+
+			string id = user.Id;
+
 			var document = DBhelper.SearchForDocument(count);
 
-			DBhelper.AddLike(document);
+			DBhelper.AddLike(document, id);
 
-			return RedirectToAction("Feed", "Index");
+			return RedirectToAction("Index", "Feed");
+		}
+
+		public IActionResult Dislike(int count)
+		{
+			var document = DBhelper.SearchForDocument(count);
+
+			DBhelper.AddDislike(document);
+
+			return RedirectToAction("Index", "Feed");
 		}
 	}
 }

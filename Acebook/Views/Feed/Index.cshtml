@@ -69,7 +69,16 @@
 					<div class="card-footer">
 						<form asp-action="Like" asp-controller="Feed">
 							<input type="hidden" name="count" value=@count />
-							<Button class="card-link" type="submit"> Like @post.GetValue("Like")</Button>
+							@{ 
+								var like = post.GetValue("Like");
+								var x = 0;
+
+								foreach (var i in like)
+								{
+									x++;
+								}
+							}
+							<Button class="card-link" type="submit"> Like @x</Button>
 						</form>
 						<form asp-action="Dislike" asp-controller="Feed">
 							<input type="hidden" name="count" value=@count />

@@ -126,7 +126,7 @@ namespace Acebook.Models
 			}
 		}
 
-		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date, int Like, int Dislike)
+		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
 		{
 			var collection = ConnectToDB("Acebook", "Posts");
 
@@ -138,8 +138,8 @@ namespace Acebook.Models
 				{ "Username", Username },
 				{ "Body", Body },
 				{ "Date", Date },
-                { "Like", Like },
-                { "Dislike", Dislike }
+                { "Like", new BsonArray() },
+                { "Dislike", new BsonArray() }
 			};
 
 			collection.InsertOne(document);
@@ -156,16 +156,45 @@ namespace Acebook.Models
 	
 		}
 
-		public static void AddLike(BsonDocument document)
+		public static void AddLike(BsonDocument document, string id)
+		{
+			bool userLike = false;
+			var collection = ConnectToDB("Acebook", "Posts");
+
+			BsonArray like = (BsonArray)document.GetValue("Like");
+			var filter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id"));
+			var newDocument = new BsonDocument { { "user", id } };
+
+			foreach (var i in like)
+			{
+				if (i == newDocument)
+				{
+					userLike = true;
+				}
+			}
+
+			if (userLike != true)
+			{
+				like.Add(newDocument);
+
+
+				var update = Builders<BsonDocument>.Update.Set("Like", like);
+				collection.UpdateOne(filter, update);
+			}
+
+			
+		}
+
+		public static void AddDislike(BsonDocument document)
 		{
 			var collection = ConnectToDB("Acebook", "Posts");
 
-			var like = document.GetValue("Like");
+			var dislike = document.GetValue("Dislike");
 
-			int newLike = (int)like + 1;
+			int newDislike = (int)dislike + 1;
 
-			var update = Builders<BsonDocument>.Update.Set("Like", newLike);
-			var result = collection.UpdateOne(document, update);
+			var update = Builders<BsonDocument>.Update.Set("Dislike", newDislike);
+			collection.UpdateOne(document, update);
 		}
 
 		public static BsonDocument SearchForDocument(int count)
