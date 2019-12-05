@@ -192,9 +192,7 @@ namespace Acebook.Models
 
 				if (x != null)
 				{
-					dislike.RemoveAt(index);
-					var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
-					collection.UpdateOne(filter, updateDislike);
+					RemoveDislike(dislike, collection, index, filter);
 				}
 
 				var update = Builders<BsonDocument>.Update.Set("Like", like);
@@ -211,9 +209,7 @@ namespace Acebook.Models
 						break;
 					}
 				}
-				like.RemoveAt(index);
-				var update = Builders<BsonDocument>.Update.Set("Like", like);
-				collection.UpdateOne(filter, update);
+				RemoveLike(like, collection, index, filter);
 			}
 
 			
@@ -256,9 +252,7 @@ namespace Acebook.Models
 
 				if (x != null)
 				{
-					like.RemoveAt(index);
-					var updateLike = Builders<BsonDocument>.Update.Set("Like", like);
-					collection.UpdateOne(filter, updateLike);
+					RemoveLike(like, collection, index, filter);
 				}
 
 				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
@@ -275,10 +269,22 @@ namespace Acebook.Models
 						break;
 					}
 				}
-				dislike.RemoveAt(index);
-				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
-				collection.UpdateOne(filter, update);
+				RemoveDislike(dislike, collection, index, filter);
 			}
+		}
+
+		public static void RemoveLike(BsonArray like, IMongoCollection<BsonDocument> collection, int index, FilterDefinition<BsonDocument> filter)
+		{
+			like.RemoveAt(index);
+			var updateLike = Builders<BsonDocument>.Update.Set("Like", like);
+			collection.UpdateOne(filter, updateLike);
+		}
+
+		public static void RemoveDislike(BsonArray dislike, IMongoCollection<BsonDocument> collection, int index, FilterDefinition<BsonDocument> filter)
+		{
+			dislike.RemoveAt(index);
+			var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+			collection.UpdateOne(filter, updateDislike);
 		}
 
 		public static BsonDocument SearchForDocument(int count)
