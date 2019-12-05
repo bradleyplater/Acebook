@@ -181,6 +181,21 @@ namespace Acebook.Models
 				var update = Builders<BsonDocument>.Update.Set("Like", like);
 				collection.UpdateOne(filter, update);
 			}
+			else
+			{
+				int index = -1;
+				foreach (var i in like)
+				{
+					index++;
+					if (i["user"] == id)
+					{
+						break;
+					}
+				}
+				like.RemoveAt(index);
+				var update = Builders<BsonDocument>.Update.Set("Like", like);
+				collection.UpdateOne(filter, update);
+			}
 
 			
 		}
