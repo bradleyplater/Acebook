@@ -23,6 +23,7 @@ namespace Acebook.Controllers
 			ViewBag.user = user;
             ViewBag.page = "profile";
             return View();
+
         }
 
 		
