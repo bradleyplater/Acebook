@@ -62,6 +62,14 @@ namespace Acebook.Controllers
 
 		public IActionResult Dislike(int count)
 		{
+			string json = HttpContext.Session.GetString("User");
+
+			Object objectuser = JsonConvert.DeserializeObject(json);
+			ViewBag.user = objectuser;
+			var user = ViewBag.user;
+
+			string id = user.Id;
+
 			var document = DBhelper.SearchForDocument(count);
 
 			DBhelper.AddDislike(document);
