@@ -17,12 +17,21 @@ namespace Acebook.Controllers
         {
 			string json = HttpContext.Session.GetString("User");
 
-			Object user = JsonConvert.DeserializeObject(json);
+			if (json != "No User")
+			{
+				Object user = JsonConvert.DeserializeObject(json);
 
 
-			ViewBag.user = user;
-            ViewBag.page = "profile";
-            return View();
+				ViewBag.user = user;
+				ViewBag.page = "profile";
+				return View();
+			}
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+			
         }
 
 		

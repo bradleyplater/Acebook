@@ -12,15 +12,22 @@ namespace Acebook.Controllers
         public IActionResult Index()
         {
 			string json = HttpContext.Session.GetString("User");
-			user = JsonConvert.DeserializeObject(json);
+			
+			if (json != "No User")
+			{
+				user = JsonConvert.DeserializeObject(json);
 
-		    var posts = DBhelper.GetAllPosts();
+				var posts = DBhelper.GetAllPosts();
 
-			ViewBag.posts = posts;
+				ViewBag.posts = posts;
 
-			ViewBag.user = user;
-            ViewBag.page = "feed"; 
-			return View();
+				ViewBag.user = user;
+				ViewBag.page = "feed";
+				return View();
+			} else
+			{
+				return RedirectToAction("Index", "Home");
+			}
         }
 
 		[HttpPost]
