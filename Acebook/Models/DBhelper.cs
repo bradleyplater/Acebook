@@ -9,7 +9,7 @@ namespace Acebook.Models
 {
     public class DBhelper
     {
-
+		//Connects to the mongo database and retrieves the collection which is specified by the function calling the code
         public static IMongoCollection<BsonDocument> ConnectToDB(string dbName, string collectionName)
         {
 			var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
@@ -18,14 +18,9 @@ namespace Acebook.Models
 			Console.WriteLine("I got here 1");
 			return database.GetCollection<BsonDocument>(collectionName);
         }
-		public static IMongoCollection<Post> ConnectToDBForPost(string dbName, string collectionName)
-		{
-			var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
-			var client = new MongoClient(connectionString);
-			var database = client.GetDatabase(dbName);
-			return database.GetCollection<Post>(collectionName);
-		}
 
+		/* Takes parameters and checks if a user exists from checking the database against those parameters
+		 * returns a filled user object if a user exists and returns an empty one if not */
 		public static User CheckIfUserExists(string email, string password)
 		{
 
@@ -44,40 +39,20 @@ namespace Acebook.Models
 					string surname = (string)document.GetValue("Surname");
 					string username = (string)document.GetValue("Username");
 
-					return new User(
-						id,
-						firstname,
-						surname,
-						username,
-						email,
-						password
-						); 
+					return new User(id,firstname,surname,username,email,password); 
 				}
 				else
 				{
-					return new User(
-						new BsonObjectId(new ObjectId()),
-						"",
-						"",
-						"",
-						"",
-						""
-						);
+					return new User(new BsonObjectId(new ObjectId()),"","","","","");
 				}
 			}
 			else
 			{
-				return new User(
-						new BsonObjectId(new ObjectId()),
-						"",
-						"",
-						"",
-						"",
-						""
-						);
+				return new User(new BsonObjectId(new ObjectId()),"","","","","");
 			}
 		}
 
+		//Creates a new user document within the mongo database
 		public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
 		{
 			var collection = ConnectToDB("Acebook", "User");
@@ -95,6 +70,7 @@ namespace Acebook.Models
 			collection.InsertOne(document);
 		}
 
+		//Checks if the username provided exists in the database
 		public static bool CheckUsernameExists(string Username)
 		{
 			var collection = ConnectToDB("Acebook", "User");
@@ -110,6 +86,8 @@ namespace Acebook.Models
 				return false;
 			}
 		}
+
+		//Checks if the email provided exists in the database
 		public static bool CheckEmailExists(string Email)
 		{
 			var collection = ConnectToDB("Acebook", "User");
@@ -126,6 +104,7 @@ namespace Acebook.Models
 			}
 		}
 
+		//Creates a post document within the mongo database
 		public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
 		{
 			var collection = ConnectToDB("Acebook", "Posts");
@@ -145,6 +124,7 @@ namespace Acebook.Models
 			collection.InsertOne(document);
 		}
 
+		//Returns a list of all posts that are stored within the mongo database
 		public static List<BsonDocument> GetAllPosts()
 		{
 
@@ -156,6 +136,7 @@ namespace Acebook.Models
 	
 		}
 
+		//Adds a like to an existing post document
 		public static void AddLike(BsonDocument document, string id)
 		{
 			bool userLike = false;
@@ -178,23 +159,14 @@ namespace Acebook.Models
 			{
 				like.Add(newDocument);
 
-				int index = -1;
-				BsonValue x = null;
-				foreach (var i in dislike)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						x = i;
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughDislike(dislike, id);
 
-				if (x != null)
+				BsonValue userId = item.Item1;
+				int index = item.Item2;
+
+				if (userId != null)
 				{
-					dislike.RemoveAt(index);
-					var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
-					collection.UpdateOne(filter, updateDislike);
+					RemoveDislike(dislike, collection, index, filter);
 				}
 
 				var update = Builders<BsonDocument>.Update.Set("Like", like);
@@ -202,23 +174,15 @@ namespace Acebook.Models
 			}
 			else
 			{
-				int index = -1;
-				foreach (var i in like)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						break;
-					}
-				}
-				like.RemoveAt(index);
-				var update = Builders<BsonDocument>.Update.Set("Like", like);
-				collection.UpdateOne(filter, update);
+				Tuple<BsonValue, int> item = SearchThroughLike(like, id);
+				int index = item.Item2;
+				RemoveLike(like, collection, index, filter);
 			}
 
 			
 		}
 
+		//Adds a dislike to an existing post document
 		public static void AddDislike(BsonDocument document, string id)
 		{
 			bool userDislike = false;
@@ -241,24 +205,14 @@ namespace Acebook.Models
 			{
 				dislike.Add(newDocument);
 
-				int index = -1;
-				BsonValue x = null;
-				foreach (var i in like)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						x = i;
-						break;
-					}
-				}
+				Tuple<BsonValue, int> item = SearchThroughLike(like, id);
 
+				BsonValue userId = item.Item1;
+				int index = item.Item2;
 
-				if (x != null)
+				if (userId != null)
 				{
-					like.RemoveAt(index);
-					var updateLike = Builders<BsonDocument>.Update.Set("Like", like);
-					collection.UpdateOne(filter, updateLike);
+					RemoveLike(like, collection, index, filter);
 				}
 
 				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
@@ -266,21 +220,65 @@ namespace Acebook.Models
 			}
 			else
 			{
-				int index = -1;
-				foreach (var i in dislike)
-				{
-					index++;
-					if (i["user"] == id)
-					{
-						break;
-					}
-				}
-				dislike.RemoveAt(index);
-				var update = Builders<BsonDocument>.Update.Set("Dislike", dislike);
-				collection.UpdateOne(filter, update);
+				Tuple<BsonValue, int> item = SearchThroughDislike(dislike, id);
+
+				int index = item.Item2;
+				
+				RemoveDislike(dislike, collection, index, filter);
 			}
 		}
 
+		//Removes a like from a post document
+		public static void RemoveLike(BsonArray like, IMongoCollection<BsonDocument> collection, int index, FilterDefinition<BsonDocument> filter)
+		{
+			like.RemoveAt(index);
+			var updateLike = Builders<BsonDocument>.Update.Set("Like", like);
+			collection.UpdateOne(filter, updateLike);
+		}
+
+		//Removes a dislike from a post document
+		public static void RemoveDislike(BsonArray dislike, IMongoCollection<BsonDocument> collection, int index, FilterDefinition<BsonDocument> filter)
+		{
+			dislike.RemoveAt(index);
+			var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+			collection.UpdateOne(filter, updateDislike);
+		}
+
+		//Searches through the likes on a post and when the id for current user matches the id within a like it breaks and returns the id and the index
+		public static Tuple<BsonValue, int> SearchThroughLike(BsonArray like, string id)
+		{
+			var index = -1;
+			BsonValue x = null;
+			foreach (var i in like)
+			{
+				index++;
+				if (i["user"] == id)
+				{
+					x = i;
+					break;
+				}
+			}
+			return Tuple.Create(x, index);
+		}
+
+		//Searches through the dislikes on a post and when the id for current user matches the id within a dislike it breaks and returns the id and the index
+		public static Tuple<BsonValue, int> SearchThroughDislike(BsonArray dislike, string id)
+		{
+			var index = -1;
+			BsonValue x = null;
+			foreach (var i in dislike)
+			{
+				index++;
+				if (i["user"] == id)
+				{
+					x = i;
+					break;
+				}
+			}
+			return Tuple.Create(x, index);
+		}
+
+		//Returns a singular document by position in the array
 		public static BsonDocument SearchForDocument(int count)
 		{
 			var documents = GetAllPosts();

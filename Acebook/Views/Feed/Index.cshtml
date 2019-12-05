@@ -71,27 +71,27 @@
 							<input type="hidden" name="count" value=@count />
 							@{ 
 								var like = post.GetValue("Like");
-								var x = 0;
+								var likeCounter = 0;
 
 								foreach (var i in like)
 								{
-									x++;
+									likeCounter++;
 								}
 							}
-							<Button class="card-link" type="submit"> Like @x</Button>
+							<Button class="card-link" type="submit"> Like @likeCounter</Button>
 						</form>
 						<form asp-action="Dislike" asp-controller="Feed">
 							<input type="hidden" name="count" value=@count />
 							@{
 								var dislike = post.GetValue("Dislike");
-								var y = 0;
+								var dislikeCounter = 0;
 
 								foreach (var i in dislike)
 								{
-									y++;
+									dislikeCounter++;
 								}
 							}
-							<button type="submit" class="card-link">Dislike @y</button>
+							<button type="submit" class="card-link">Dislike @dislikeCounter</button>
 						</form>
 						<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
 						<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
