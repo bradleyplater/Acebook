@@ -162,6 +162,7 @@ namespace Acebook.Models
 			var collection = ConnectToDB("Acebook", "Posts");
 
 			BsonArray like = (BsonArray)document.GetValue("Like");
+			BsonArray dislike = (BsonArray)document.GetValue("Dislike");
 			var filter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id"));
 			var newDocument = new BsonDocument { { "user", id } };
 
@@ -177,7 +178,19 @@ namespace Acebook.Models
 			{
 				like.Add(newDocument);
 
+				int index = -1;
+				foreach (var i in dislike)
+				{
+					index++;
+					if (i["user"] == id)
+					{
+						break;
+					}
+				}
 
+				dislike.RemoveAt(index);
+				var updateDislike = Builders<BsonDocument>.Update.Set("Dislike", dislike);
+				collection.UpdateOne(filter, updateDislike);
 				var update = Builders<BsonDocument>.Update.Set("Like", like);
 				collection.UpdateOne(filter, update);
 			}
