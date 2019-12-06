@@ -152,12 +152,4 @@ post-container {
     border-radius: 50%;
 }
 
-.img-formating img 
-{ 
-   display:inline;
-   align-content:baseline;
-}
-.button-container { 
-    display:inline-block; 
-    background-color: pink; 
-}
+

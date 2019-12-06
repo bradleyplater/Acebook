@@ -66,7 +66,7 @@
 							@post.GetValue("Body")
 						</p>
 					</div>
-					<div  class="card-footer button-container">
+					<div  class="card-footer">
                        
                             <form asp-action="Like" asp-controller="Feed">
                                 <input type="hidden" name="count" value=@count />
@@ -79,7 +79,9 @@
                                         likeCounter++;
                                     }
                                 }
-                                <Button class="card-link" type="submit"> ,<img src="../img/thumbs-up.png" width="30" height="30" alt="like" /> @likeCounter</Button>
+                            
+                                <Button class="card-link" type="submit"> ,<img  src="../img/thumbs-up.png" width="30" height="30" alt="like" /> @likeCounter</Button>
+                            
                             </form>
 
                             <form asp-action="Dislike" asp-controller="Feed">
@@ -93,10 +95,13 @@
                                         dislikeCounter++;
                                     }
                                 }
-                                <button type="submit" class="card-link"><img src="../img/thumb-down.png" width="30" height="30" alt="dislike" /> @dislikeCounter</button>
+                            
+                                <button type="submit" class="card-link"><img class="icon" src="../img/thumb-down.png" width="30" height="30" alt="dislike" /> @dislikeCounter</button>
+                            
                             </form>
+                        </div> 
 					</div>
-				</div>
+				
 			}
 		}
 
