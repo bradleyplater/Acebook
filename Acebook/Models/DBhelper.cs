@@ -21,10 +21,10 @@ namespace Acebook.Models
 
         /* Takes parameters and checks if a user exists from checking the database against those parameters
 		 * returns a filled user object if a user exists and returns an empty one if not */
-        public static User CheckIfUserExists(string email, string password)
+        public static User CheckIfUserExists(string email, string password, string collectionName)
         {
 
-            var collection = ConnectToDB("Acebook", "User");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var document = collection.Find(new BsonDocument("Email", email)).FirstOrDefault();
 
@@ -53,9 +53,9 @@ namespace Acebook.Models
         }
 
         //Creates a new user document within the mongo database
-        public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password)
+        public static void CreateNewUser(string Firstname, string Surname, string Email, string Username, string Password, string collectionName)
         {
-            var collection = ConnectToDB("Acebook", "User");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var document = new BsonDocument
             {
@@ -71,9 +71,9 @@ namespace Acebook.Models
         }
 
         //Checks if the username provided exists in the database
-        public static bool CheckUsernameExists(string Username)
+        public static bool CheckUsernameExists(string Username, string collectionName)
         {
-            var collection = ConnectToDB("Acebook", "User");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var document = collection.Find(new BsonDocument("Username", Username)).FirstOrDefault();
 
@@ -88,9 +88,9 @@ namespace Acebook.Models
         }
 
         //Checks if the email provided exists in the database
-        public static bool CheckEmailExists(string Email)
+        public static bool CheckEmailExists(string Email, string collectionName)
         {
-            var collection = ConnectToDB("Acebook", "User");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var document = collection.Find(new BsonDocument("Email", Email)).FirstOrDefault();
 
@@ -105,9 +105,9 @@ namespace Acebook.Models
         }
 
         //Creates a post document within the mongo database
-        public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date)
+        public static void CreatePost(string Firstname, string Surname, string Username, string Body, DateTime Date, string collectionName)
         {
-            var collection = ConnectToDB("Acebook", "Posts");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var document = new BsonDocument
             {
@@ -125,10 +125,10 @@ namespace Acebook.Models
         }
 
         //Returns a list of all posts that are stored within the mongo database
-        public static List<BsonDocument> GetAllPosts()
+        public static List<BsonDocument> GetAllPosts(string collectionName)
         {
 
-            var collection = ConnectToDB("Acebook", "Posts");
+            var collection = ConnectToDB("Acebook", collectionName);
 
             var results = collection.Find(new BsonDocument()).ToList();
 
@@ -136,9 +136,9 @@ namespace Acebook.Models
 
         }
 
-        public static List<BsonDocument> GetPostById(string id)
+        public static List<BsonDocument> GetPostById(string id, string collectionName)
         {
-            var collection = ConnectToDB("Acebook", "Posts");
+            var collection = ConnectToDB("Acebook", collectionName);
 			var newId = ObjectId.Parse(id);
             var filter = Builders<BsonDocument>.Filter.Eq("_id", newId);
             var results = collection.Find(new BsonDocument( "_id", newId )).ToList();
@@ -148,10 +148,10 @@ namespace Acebook.Models
 
 
 		//Adds a like to an existing post document
-		public static void AddLike(BsonDocument document, string id)
+		public static void AddLike(BsonDocument document, string id, string collectionName)
 		{
 			bool userLike = false;
-			var collection = ConnectToDB("Acebook", "Posts");
+			var collection = ConnectToDB("Acebook", collectionName);
 
 			BsonArray like = (BsonArray)document.GetValue("Like");
 			BsonArray dislike = (BsonArray)document.GetValue("Dislike");
@@ -194,10 +194,10 @@ namespace Acebook.Models
 		}
 
 		//Adds a dislike to an existing post document
-		public static void AddDislike(BsonDocument document, string id)
+		public static void AddDislike(BsonDocument document, string id, string collectionName)
 		{
 			bool userDislike = false;
-			var collection = ConnectToDB("Acebook", "Posts");
+			var collection = ConnectToDB("Acebook", collectionName);
 
 			BsonArray like = (BsonArray)document.GetValue("Like");
 			BsonArray dislike = (BsonArray)document.GetValue("Dislike");
@@ -290,9 +290,9 @@ namespace Acebook.Models
 		}
 
 		//Returns a singular document by position in the array
-		public static BsonDocument SearchForDocument(int count)
+		public static BsonDocument SearchForDocument(int count, string collectionName)
 		{
-			var documents = GetAllPosts();
+			var documents = GetAllPosts(collectionName);
 
 			return documents[count];
 		}

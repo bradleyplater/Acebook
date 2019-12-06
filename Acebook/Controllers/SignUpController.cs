@@ -23,8 +23,8 @@ namespace Acebook.Controllers
 
 			if (formValidation(Model))
 			{
-				DBhelper.CreateNewUser(Model.Firstname, Model.Surname, Model.Email, Model.Username, Model.Password);
-				User user = DBhelper.CheckIfUserExists(Model.Email, Model.Password);
+				DBhelper.CreateNewUser(Model.Firstname, Model.Surname, Model.Email, Model.Username, Model.Password, "User");
+				User user = DBhelper.CheckIfUserExists(Model.Email, Model.Password, "User");
 
 				if (user.Email != "")
 				{
@@ -47,10 +47,10 @@ namespace Acebook.Controllers
 			if (Model.Firstname == "" && Model.Email == "" && Model.Surname == "" && Model.Password == "" && Model.ConfirmPassword == "")
 			{
 				return false;
-			}else if (DBhelper.CheckEmailExists(Model.Email))
+			}else if (DBhelper.CheckEmailExists(Model.Email, "User"))
 			{
 				return false; 
-			} else if (DBhelper.CheckUsernameExists(Model.Username))
+			} else if (DBhelper.CheckUsernameExists(Model.Username, "User"))
 			{
 				return false;
 			} else if (Model.Password != Model.ConfirmPassword)
@@ -69,81 +69,5 @@ namespace Acebook.Controllers
 		{
 			return View();
 		}
-
-
-		// GET: SignUp/Details/5
-		public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: SignUp/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: SignUp/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SignUp/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: SignUp/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: SignUp/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SignUp/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

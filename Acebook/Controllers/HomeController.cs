@@ -13,13 +13,7 @@ namespace Acebook.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+      
         public IActionResult SignOut()
         {
             HttpContext.Session.Clear();
@@ -37,7 +31,7 @@ namespace Acebook.Controllers
 		[HttpPost]
         public IActionResult Index(LoginModel model)
         {
-            User user = DBhelper.CheckIfUserExists(model.Email, model.Password);
+            User user = DBhelper.CheckIfUserExists(model.Email, model.Password, "User");
 
             if (user.Email != "")
             {

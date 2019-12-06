@@ -17,7 +17,7 @@ namespace Acebook.Controllers
 			{
 				user = JsonConvert.DeserializeObject(json);
 
-				var posts = DBhelper.GetAllPosts();
+				var posts = DBhelper.GetAllPosts("Posts");
 
 				ViewBag.posts = posts;
 
@@ -45,7 +45,7 @@ namespace Acebook.Controllers
 			string Body = message;
 			DateTime Date = DateTime.Now;
 
-			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date);
+			DBhelper.CreatePost(Firstname, Surname, Username, Body, Date, "Posts");
 
 			return RedirectToAction("Index", "Feed");
 		}
@@ -60,9 +60,9 @@ namespace Acebook.Controllers
 
 			string id = user.Id;
 
-			var document = DBhelper.SearchForDocument(count);
+			var document = DBhelper.SearchForDocument(count, "Posts");
 
-			DBhelper.AddLike(document, id);
+			DBhelper.AddLike(document, id, "Posts");
 
 			return RedirectToAction("Index", "Feed");
 		}
@@ -77,9 +77,9 @@ namespace Acebook.Controllers
 
 			string id = user.Id;
 
-			var document = DBhelper.SearchForDocument(count);
+			var document = DBhelper.SearchForDocument(count, "Posts");
 
-			DBhelper.AddDislike(document, id);
+			DBhelper.AddDislike(document, id, "Posts");
 
 			return RedirectToAction("Index", "Feed");
 		}
