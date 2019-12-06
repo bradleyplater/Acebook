@@ -95,12 +95,10 @@ post-container {
     justify-content: left;
 	font-size: 18px;
 }
-.profile-container{
-	width: 300px;
-	text-align: left;
-	
+.profile-container {
+    width: 300px;
+    text-align: left;
 }
-
 .card-bottomMargin { 
     margin-bottom: 20px;
 }
@@ -153,4 +151,5 @@ post-container {
     border-color: darksalmon;
     border-radius: 50%;
 }
+
 
