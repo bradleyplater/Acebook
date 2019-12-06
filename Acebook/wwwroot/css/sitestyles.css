@@ -95,12 +95,10 @@ post-container {
     justify-content: left;
 	font-size: 18px;
 }
-.profile-container{
-	width: 300px;
-	text-align: left;
-	
+.profile-container {
+    width: 300px;
+    text-align: left;
 }
-
 .card-bottomMargin { 
     margin-bottom: 20px;
 }
@@ -154,3 +152,12 @@ post-container {
     border-radius: 50%;
 }
 
+.img-formating img 
+{ 
+   display:inline;
+   align-content:baseline;
+}
+.button-container { 
+    display:inline-block; 
+    background-color: pink; 
+}

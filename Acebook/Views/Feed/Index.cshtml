@@ -66,35 +66,35 @@
 							@post.GetValue("Body")
 						</p>
 					</div>
-					<div class="card-footer">
-						<form asp-action="Like" asp-controller="Feed">
-							<input type="hidden" name="count" value=@count />
-							@{ 
-								var like = post.GetValue("Like");
-								var likeCounter = 0;
+					<div  class="card-footer button-container">
+                       
+                            <form asp-action="Like" asp-controller="Feed">
+                                <input type="hidden" name="count" value=@count />
+                                @{
+                                    var like = post.GetValue("Like");
+                                    var likeCounter = 0;
 
-								foreach (var i in like)
-								{
-									likeCounter++;
-								}
-							}
-							<Button class="card-link" type="submit"> Like @likeCounter</Button>
-						</form>
-						<form asp-action="Dislike" asp-controller="Feed">
-							<input type="hidden" name="count" value=@count />
-							@{
-								var dislike = post.GetValue("Dislike");
-								var dislikeCounter = 0;
+                                    foreach (var i in like)
+                                    {
+                                        likeCounter++;
+                                    }
+                                }
+                                <Button class="card-link" type="submit"> ,<img src="../img/thumbs-up.png" width="30" height="30" alt="like" /> @likeCounter</Button>
+                            </form>
 
-								foreach (var i in dislike)
-								{
-									dislikeCounter++;
-								}
-							}
-							<button type="submit" class="card-link">Dislike @dislikeCounter</button>
-						</form>
-						<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-						<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                            <form asp-action="Dislike" asp-controller="Feed">
+                                <input type="hidden" name="count" value=@count />
+                                @{
+                                    var dislike = post.GetValue("Dislike");
+                                    var dislikeCounter = 0;
+
+                                    foreach (var i in dislike)
+                                    {
+                                        dislikeCounter++;
+                                    }
+                                }
+                                <button type="submit" class="card-link"><img src="../img/thumb-down.png" width="30" height="30" alt="dislike" /> @dislikeCounter</button>
+                            </form>
 					</div>
 				</div>
 			}
