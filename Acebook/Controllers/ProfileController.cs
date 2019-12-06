@@ -26,7 +26,7 @@ namespace Acebook.Controllers
                 ViewBag.page = "profile";
                 var newUser = ViewBag.user;
                 string id = newUser.Id;
-                var posts = DBhelper.GetPostById(id);
+				var posts = DBhelper.GetAllPosts();
                 ViewBag.posts = posts; 
 
                 return View();

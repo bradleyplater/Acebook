@@ -139,8 +139,9 @@ namespace Acebook.Models
         public static List<BsonDocument> GetPostById(string id)
         {
             var collection = ConnectToDB("Acebook", "Posts");
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
-            var results = collection.Find(filter).ToList();
+			var newId = ObjectId.Parse(id);
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", newId);
+            var results = collection.Find(new BsonDocument( "_id", newId )).ToList();
             return results; 
         }
             
