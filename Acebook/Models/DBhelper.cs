@@ -15,7 +15,6 @@ namespace Acebook.Models
             var connectionString = "mongodb+srv://Makers1:Admin@acebook-ye6db.mongodb.net/test?retryWrites=true&w=majority";
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(dbName);
-            Console.WriteLine("I got here 1");
             return database.GetCollection<BsonDocument>(collectionName);
         }
 
