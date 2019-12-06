@@ -109,7 +109,7 @@
 												likeCounter++;
 											}
 										}
-										<Button class="card-link" type="submit"> Like @likeCounter</Button>
+										<Button class="card-link"  type="submit"><img class="icon" src="../img/thumb-down.png" width="30" height="30" alt="dislike" />@likeCounter</Button>
 										@{
 											var dislike = post.GetValue("Dislike");
 											var dislikeCounter = 0;
@@ -119,7 +119,7 @@
 												dislikeCounter++;
 											}
 										}
-										<button type="submit" class="card-link">Dislike @dislikeCounter</button>
+										<button type="submit" class="card-link"><img class="icon" src="../img/thumb-down.png" width="30" height="30" alt="dislike" /> @dislikeCounter</button>
 									<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
 									<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
 								</div>

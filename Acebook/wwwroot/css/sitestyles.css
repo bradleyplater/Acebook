@@ -153,3 +153,12 @@ post-container {
 }
 
 
+.inline {
+	display: inline-block !important;
+	margin-right: 5px;
+}
+
+.floated {
+	float: left;
+	margin-right: 5px;
+}
